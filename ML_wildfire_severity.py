@@ -41,11 +41,11 @@ def ML_model(state):
     # Selected string columns with no missing values
     categorical_columns = ['FPA_ID', 'SOURCE_SYSTEM_TYPE', 'SOURCE_SYSTEM', 'NWCG_REPORTING_AGENCY', 
                            'NWCG_REPORTING_UNIT_ID', 'NWCG_REPORTING_UNIT_NAME', 'SOURCE_REPORTING_UNIT_NAME',
-                           'OWNER_DESCR', 'STAT_CAUSE_DESCR', 'STATE']
+                           'OWNER_DESCR', 'STAT_CAUSE_DESCR', 'STATE', 'LATITUDE', 'LONGITUDE']
 
     scale_columns = ['FOD_ID', 'FIRE_YEAR', 'DISCOVERY_DATE', 'DISCOVERY_DOY', 'STAT_CAUSE_CODE', 'OWNER_CODE']
 
-    numeric_columns = ['LATITUDE', 'LONGITUDE', 'VEG_TYPE', 'SOIL_TYPE']
+    numeric_columns = ['VEG_TYPE', 'SOIL_TYPE']
 
     features = ColumnTransformer([
         ('categorical', OneHotEncoder(handle_unknown = 'ignore'), categorical_columns),
@@ -162,7 +162,7 @@ def plot_predictions(state, x_test, y_test, y_pred):
 
     create_map(x_test['LATITUDE'].values, x_test['LONGITUDE'].values,
                fire_num_calc(y_pred),
-               'ML Predicted Fire Class', 
+               'Predicted Fire Class', 
                axgr[1], 1)   
 
 def make_predictions(state):
