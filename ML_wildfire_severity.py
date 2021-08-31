@@ -48,7 +48,7 @@ def ML_model(state):
     categorical_columns = ['FPA_ID', 'SOURCE_SYSTEM_TYPE', 'SOURCE_SYSTEM', 'NWCG_REPORTING_AGENCY', 
                            'NWCG_REPORTING_UNIT_ID', 'NWCG_REPORTING_UNIT_NAME', 'SOURCE_REPORTING_UNIT_NAME',
                            'OWNER_DESCR', 'STAT_CAUSE_DESCR', 'STATE']
-
+    
     scale_columns = ['FOD_ID', 'FIRE_YEAR', 'DISCOVERY_DATE', 'DISCOVERY_DOY', 'STAT_CAUSE_CODE', 'OWNER_CODE', 
                     'LATITUDE', 'LONGITUDE']
 
