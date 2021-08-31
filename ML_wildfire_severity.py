@@ -25,7 +25,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 def ML_model(state):
 
-    df_state = pd.read_csv('WildFires_'+state+'.csv', index_col=False, low_memory=False)
+    df_state = pd.read_csv('data/WildFires_'+state+'.csv', index_col=False, low_memory=False)
     
     ## Missing Values
     #df_state.isna().sum()
@@ -42,40 +42,39 @@ def ML_model(state):
     X_train = train_data.drop(['FIRE_SIZE', 'FIRE_SIZE_CLASS'], axis=1)
     x_test = test_data.drop(['FIRE_SIZE', 'FIRE_SIZE_CLASS'], axis=1)
     
-    RERUN_TRAINING = False # change to True to re-run ML training
-    if RERUN_TRAINING == True:
+
     
-        # Selected string columns with no missing values
-        categorical_columns = ['FPA_ID', 'SOURCE_SYSTEM_TYPE', 'SOURCE_SYSTEM', 'NWCG_REPORTING_AGENCY', 
-                               'NWCG_REPORTING_UNIT_ID', 'NWCG_REPORTING_UNIT_NAME', 'SOURCE_REPORTING_UNIT_NAME',
-                               'OWNER_DESCR', 'STAT_CAUSE_DESCR', 'STATE']
+    # Selected string columns with no missing values
+    categorical_columns = ['FPA_ID', 'SOURCE_SYSTEM_TYPE', 'SOURCE_SYSTEM', 'NWCG_REPORTING_AGENCY', 
+                           'NWCG_REPORTING_UNIT_ID', 'NWCG_REPORTING_UNIT_NAME', 'SOURCE_REPORTING_UNIT_NAME',
+                           'OWNER_DESCR', 'STAT_CAUSE_DESCR', 'STATE']
 
-        scale_columns = ['FOD_ID', 'FIRE_YEAR', 'DISCOVERY_DATE', 'DISCOVERY_DOY', 'STAT_CAUSE_CODE', 'OWNER_CODE', 
-                        'LATITUDE', 'LONGITUDE']
+    scale_columns = ['FOD_ID', 'FIRE_YEAR', 'DISCOVERY_DATE', 'DISCOVERY_DOY', 'STAT_CAUSE_CODE', 'OWNER_CODE', 
+                    'LATITUDE', 'LONGITUDE']
 
-        numeric_columns = ['VEG_TYPE', 'SOIL_TYPE']
+    numeric_columns = ['VEG_TYPE', 'SOIL_TYPE']
 
-        features = ColumnTransformer([
-            #('categorical', OneHotEncoder(handle_unknown = 'ignore'), categorical_columns),
-            ('scaler', StandardScaler(), scale_columns),
-            ('numeric', 'passthrough', numeric_columns)
-            ])
+    features = ColumnTransformer([
+        #('categorical', OneHotEncoder(handle_unknown = 'ignore'), categorical_columns),
+        ('scaler', StandardScaler(), scale_columns),
+        ('numeric', 'passthrough', numeric_columns)
+        ])
 
-        est = Pipeline([
-            ('features', features),
-            ('estimator', RandomForestClassifier(n_estimators = 100, 
-                                                 max_depth = 25, 
-                                                 warm_start = True))
-            ])
+    est = Pipeline([
+        ('features', features),
+        ('estimator', RandomForestClassifier(n_estimators = 100, 
+                                             max_depth = 25, 
+                                             warm_start = True))
+        ])
 
-        # Estimator
-        est.fit(X_train, y_train)
+    # Estimator
+    est.fit(X_train, y_train)
 
-        # save the model to disk
-        pickle.dump(est, open('finalized_ML_model_'+state+'.sav', 'wb'))
+    # save the model to disk
+    # pickle.dump(est, open('finalized_ML_model_'+state+'.sav', 'wb'))
 
     # load the model from disk
-    est = pickle.load(open('finalized_ML_model_'+state+'.sav', 'rb'))
+    # est = pickle.load(open('finalized_ML_model_'+state+'.sav', 'rb'))
     
     # Predictions
     y_pred = est.predict(x_test)
@@ -185,6 +184,9 @@ def plot_predictions(state, x_test, y_test, y_pred):
                fire_num_calc(y_pred),
                'Predicted Fire Class', 
                axgr[1], 1)   
+    
+    plt.tight_layout()
+    plt.savefig('figures/ML_prediction_test_'+state+'.png', bbox_inches = 'tight', pad_inches = 0.1)
     
     
 def calc_model_stats(y_test, y_pred):

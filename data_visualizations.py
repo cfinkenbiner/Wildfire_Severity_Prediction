@@ -107,7 +107,7 @@ def fig_fire_class(state):
     end_yr = 2015
     years = np.arange(start_yr, end_yr) # date range
     
-    df_state = pd.read_csv('WildFires_'+state+'.csv', low_memory=False)
+    df_state = pd.read_csv('data/WildFires_'+state+'.csv', low_memory=False)
 
     df_state['FIRE_SIZE_CLASS'].value_counts().plot(kind='bar')
     plt.title('Number of Fires in Each Size Class for '+state)
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     
 def fig_soil_veg_map(state):
     # load appropriate datafile
-    df_state = pd.read_csv('WildFires_'+state+'.csv', index_col=False, low_memory=False)
+    df_state = pd.read_csv('data/WildFires_'+state+'.csv', index_col=False, low_memory=False)
     
     if state == 'CA':
         lat_lon = [-125, -113, 30, 43] 
@@ -182,6 +182,8 @@ def fig_soil_veg_map(state):
                df_state['VEG_TYPE'].values,
                'Vegetation Classification', 
                axgr[1], 1)   
+    
+    plt.savefig('figures/soil_veg_map_CA.png', bbox_inches = 'tight', pad_inches = 0.1)
 
 if __name__ == '__main__':
     fig_soil_veg_map(state)
