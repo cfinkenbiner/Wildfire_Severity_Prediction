@@ -1,4 +1,4 @@
-# Wildfire Severity Estimates to Support Property Insurance Metrics
+# Wildfire Severity Estimates to Support Property Insurance Evaluation Metrics
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cfinkenbiner/Wildfire_Severity_Prediction/HEAD?filepath=Capstone_Final.ipynb)
 
