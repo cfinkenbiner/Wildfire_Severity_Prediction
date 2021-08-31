@@ -101,7 +101,10 @@ if __name__ == '__main__':
     
 
 ## Calculate Number of Fires in Each Class Size for a State
-def fig_fire_class(start_yr, end_yr, state):
+def fig_fire_class(state):
+    # Specify date range between 1992-2015
+    start_yr = 1992
+    end_yr = 2015
     years = np.arange(start_yr, end_yr) # date range
     
     df_state = pd.read_csv('WildFires_'+state+'.csv', low_memory=False)
