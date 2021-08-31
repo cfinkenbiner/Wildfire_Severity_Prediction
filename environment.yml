@@ -9,3 +9,4 @@ dependencies:
   - python-wget==3.2
   - scikit-learn
   - Cartopy==0.18.0
+  - dill
