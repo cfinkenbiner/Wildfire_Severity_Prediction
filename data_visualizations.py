@@ -183,7 +183,7 @@ def fig_soil_veg_map(state):
                'Vegetation Classification', 
                axgr[1], 1)   
     
-    plt.savefig('figures/soil_veg_map_CA.png', bbox_inches = 'tight', pad_inches = 0.1)
+    plt.savefig('figures/soil_veg_map_'+state+'.png', bbox_inches = 'tight', pad_inches = 0.1)
 
 if __name__ == '__main__':
     fig_soil_veg_map(state)
